@@ -1,0 +1,58 @@
+<!doctype html>
+<head>
+<meta charset='utf-8'>
+<title>Probe</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/echarts/3.6.2/echarts.common.min.js"></script>
+</head>
+<body>
+<div id="blog.mapleque.com" style="width:100%;height:300px"></div>
+<script>
+var data = <!--#include file='probe.json' -->;
+
+var time = [];
+var value = [];
+var curNum = 0;
+for (var key in data) {
+    if (data.hasOwnProperty(key)) {
+        time.push(key);
+        value.push([key, parseInt(data[key])]);
+    }
+}
+var option = {
+    title:{
+        text:'blog.mapleque.com'
+    },
+    tooltip: {
+        trigger:'axis',
+        axisPointer:{animation:false}
+    },
+    dataZoom:[{
+        show:false,
+            realtime:true,
+            start:0,
+            end:100,
+            xAxisIndex:[0]
+        },{
+            type:'inside',
+            realtime:true,
+            start:0,
+            end:100,
+            xAxisIndex:[0]
+        }],
+    xAxis: {
+       type:'time'
+    },
+    yAxis: [{
+       type:'value'
+    }],
+    series: [{
+        name:'ms',
+        type:'line',
+        showSymbol:false,
+        data:value
+    }]
+}
+var myChart = echarts.init(document.getElementById("blog.mapleque.com"));
+myChart.setOption(option);
+</script>
+</body>
